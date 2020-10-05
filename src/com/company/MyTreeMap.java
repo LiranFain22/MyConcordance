@@ -23,25 +23,25 @@ public class MyTreeMap {
     public void put(String word, long line) {
         if(root != null) {
             MyNode p = root;
-            if (p.getWord().compareTo(word) == 0)
+            if (p.getWord().compareTo(word.toLowerCase()) == 0)
                     p.addLine(line);
-                else if (p.getWord().compareTo(word) < 0) {
+                else if (p.getWord().compareTo(word.toLowerCase()) < 0) {
                     if (p.getLeft() == null)
-                        p.setLeft(new MyNode(word));
+                        p.setLeft(new MyNode(word.toLowerCase()));
                     else {
                         MyTreeMap newRoot = new MyTreeMap(p.getLeft());
-                        newRoot.put(word, line);
+                        newRoot.put(word.toLowerCase(), line);
                     }
-                } else if (p.getWord().compareTo(word) > 0) {
+                } else if (p.getWord().compareTo(word.toLowerCase()) > 0) {
                     if (p.getRight() == null)
-                        p.setRight(new MyNode(word));
+                        p.setRight(new MyNode(word.toLowerCase()));
                     else {
                         MyTreeMap newRoot = new MyTreeMap(p.getRight());
-                        newRoot.put(word, line);
+                        newRoot.put(word.toLowerCase(), line);
                     }
             }
         } else{
-            MyNode p = new MyNode(word);
+            MyNode p = new MyNode(word.toLowerCase());
             p.addLine(line);
         }
     }

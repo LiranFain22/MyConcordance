@@ -1,38 +1,59 @@
 package com.company;
 
-import java.nio.file.Files;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class MyConcordance {
 
     public static void main(String[] args) {
-
-        String nameFile = readNameFileFromUser();
-
-        readFile(nameFile);
-    }
-
-    private static String readNameFileFromUser() {
+        System.out.print("Enter the FULL PATH file with extension : ");
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a name file and extension: (example - NAMEFILE.txt)");
-        String nameFile = scanner.nextLine();
-        scanner.close();
-        return nameFile;
+        String pathFile = scanner.nextLine();
+        readFile(pathFile);
     }
 
-    private static void readFile(String nameFile) {
-        Scanner scanner = new Scanner(nameFile);
-        long lineNumber = 1;
-        while (scanner.hasNext()){
-            if(scanner.next().compareTo("\n") == 0)
+    public static void readFile(String pathFile) {
+//        try {
+//            System.out.print("Enter the FULL PATH file with extension : ");
+//            Scanner scanner = new Scanner(System.in);
+//            File file = new File(scanner.nextLine());
+//            scanner = new Scanner(file);
+//            long lineNumber = 1;
+//            while (scanner.hasNextLine()) {
+//                String word = scanner.next();
+//                addToMyTreeMap(word, lineNumber);
+//            }
+//            scanner.close();
+//        } catch (NoSuchElementException | FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+        File file = new File(pathFile);
+        Scanner fileScanner = null;
+        try {
+            fileScanner = new Scanner(file);
+            long lineNumber = 1;
+            while(fileScanner.hasNextLine()){
+                String readLine = fileScanner.nextLine();
+                Scanner lineScanner = new Scanner(readLine);
+                while(lineScanner.hasNext()){
+                    String word = lineScanner.next();
+                    addToMyTreeMap(word, lineNumber);
+                }
+                lineScanner.close();
                 lineNumber++;
-            String word = scanner.next();
-            addToMyTreeMap(word, lineNumber);
+            }
+            fileScanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
     private static void addToMyTreeMap(String word, long lineNumber) {
         MyTreeMap myTreeMap = new MyTreeMap();
         myTreeMap.put(word, lineNumber);
+        System.out.println(word);
+        System.out.println(lineNumber);
     }
 }
