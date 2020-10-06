@@ -9,21 +9,16 @@ import java.util.Scanner;
 public class MyConcordance {
 
     private static FileWriter writer;
+    private static String input;
+    private static String output;
 
-    static {
-        try {
-            writer = new FileWriter(new File("C:\\Users\\Liran\\Desktop\\result.txt"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 
     public static void main(String[] args) throws IOException {
-        System.out.print("Enter the FULL PATH file with extension : ");
-        Scanner scanner = new Scanner(System.in);
-        String pathFile = scanner.nextLine();
-        MyTreeMap myTreeMap = readFile(pathFile);
+        input = args[0];
+        output = args[1];
+        writer = new FileWriter(new File(output));
+        MyTreeMap myTreeMap = readFile(input);
         saveToFile(myTreeMap);
         writer.close();
     }
