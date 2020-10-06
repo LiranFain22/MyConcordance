@@ -25,24 +25,26 @@ public class MyTreeMap {
             MyNode p = root;
             if (p.getWord().compareTo(word.toLowerCase()) == 0)
                     p.addLine(line);
-                else if (p.getWord().compareTo(word.toLowerCase()) < 0) {
-                    if (p.getLeft() == null)
+                else if (p.getWord().compareTo(word.toLowerCase()) > 0) {
+                    if (p.getLeft() == null) {
                         p.setLeft(new MyNode(word.toLowerCase()));
-                    else {
+                        p.getLeft().addLine(line);
+                    } else {
                         MyTreeMap newRoot = new MyTreeMap(p.getLeft());
                         newRoot.put(word.toLowerCase(), line);
                     }
-                } else if (p.getWord().compareTo(word.toLowerCase()) > 0) {
-                    if (p.getRight() == null)
+                } else if (p.getWord().compareTo(word.toLowerCase()) < 0) {
+                    if (p.getRight() == null) {
                         p.setRight(new MyNode(word.toLowerCase()));
-                    else {
+                        p.getRight().addLine(line);
+                    } else {
                         MyTreeMap newRoot = new MyTreeMap(p.getRight());
                         newRoot.put(word.toLowerCase(), line);
                     }
             }
         } else{
-            MyNode p = new MyNode(word.toLowerCase());
-            p.addLine(line);
+            root = new MyNode(word.toLowerCase());
+            root.addLine(line);
         }
     }
 
@@ -53,7 +55,7 @@ public class MyTreeMap {
         return root;
     }
 
-    private class MyNode {
+    public class MyNode {
         private String word;
         private ArrayList<Integer> linesOfWord;
         private MyNode left;
@@ -100,6 +102,14 @@ public class MyTreeMap {
 
         public void setRight(MyNode right) {
             this.right = right;
+        }
+
+        /**
+         * ToString
+         */
+        @Override
+        public String toString() {
+            return getWord() + ": " + linesOfWord.toString();
         }
     }
 }
